@@ -1,4 +1,4 @@
 ﻿[*.cs]
 
-# IDE0290: Use primary constructor
-csharp_style_prefer_primary_constructors = false
+# CA1051: Não declarar campos de instância visíveis
+dotnet_diagnostic.CA1051.severity = silent
