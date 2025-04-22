@@ -26,10 +26,5 @@ public class CustomerValidator : AbstractValidator<Customer>
             .Matches(@"^\+[1-9]\d{10,14}$")
             .WithMessage("Phone number must start with '+' followed by 11-15 digits.");
 
-        RuleFor(c => c.Document).SetValidator()
-        
-        RuleFor(c => c.Role)
-            .NotEqual(cRole.None)
-            .WithMessage("c role cannot be None.");
     }
 }
