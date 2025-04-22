@@ -15,7 +15,7 @@ namespace Ambev.DeveloperEvaluation.Domain.Entities
     public class Address : BaseEntity, IAddress
     {
         public Guid Id { get; set; }
-        public string CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
         public int Number { get; set; }
         public string Street { get; set; }
         public string Neighborhood { get; set; }
@@ -25,7 +25,7 @@ namespace Ambev.DeveloperEvaluation.Domain.Entities
         public string ZipCode { get; set; }
         public string ReferencePoint { get; set; }
 
-        public Customer customer { get; set; }
+        public Customer Customer { get; set; }
 
 
         public ValidationResultDetail Validate()

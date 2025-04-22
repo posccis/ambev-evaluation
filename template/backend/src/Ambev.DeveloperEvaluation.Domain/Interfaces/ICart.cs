@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ambev.DeveloperEvaluation.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,8 +11,8 @@ namespace Ambev.DeveloperEvaluation.Domain.Interfaces
     {
         public Guid Id { get; set; }
         public Guid CustomerId { get; set; }
-        public List<ICartItem> Items { get; set; }
-        public decimal Subtotal => Items.Sum(i => i.TotalPrice);
+        public List<CartItem> Items { get; set; }
+        public decimal Subtotal => Items.Sum(i => i.Total);
         public decimal Total => Subtotal;
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }

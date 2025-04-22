@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ambev.DeveloperEvaluation.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,12 +9,14 @@ namespace Ambev.DeveloperEvaluation.Domain.Interfaces
 {
     public interface ICartItem
     {
+        public Guid Id { get; set;}
         public Guid ProductId { get;  set; }
         public Guid CartId { get; set; }
         public string ProductName { get;  set; }         
         public decimal UnitPrice { get;  set; }          
         public int Quantity { get;  set; }               
-        public decimal Total => UnitPrice * Quantity;
- 
-}
+        public decimal Total { get; set; }
+        public Cart Cart { get; set; }
+
+    }
 }

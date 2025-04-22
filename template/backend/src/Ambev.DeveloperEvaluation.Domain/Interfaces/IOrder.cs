@@ -14,14 +14,14 @@ namespace Ambev.DeveloperEvaluation.Domain.Interfaces
         public Guid Id { get; set; }
         public Guid CustomerId { get; set; }             
         public Customer Customer { get;  set; }          
-        public DateTime CreatedAt { get;  set; }         
-        public DateTime? PaidAt { get;  set; }           
-        public DateTime? DeliveredAt { get;  set; }      
-        public OrderStatus Status { get;  set; }         
-        public decimal TotalAmount { get;  set; }        
+        public DateTime CreatedOn { get; set; }
+        public DateTime? PaidOn { get;  set; }           
+        public DateTime? DeliveredOn { get;  set; }      
+        public OrderStatus Status { get;  set; }
+        public decimal TotalAmount { get; set; }
         public decimal Discount { get;  set; }
         public decimal ShippingValue { get; set; }
-        public decimal FinalAmount => TotalAmount + ShippingValue - Discount;
+        public decimal FinalAmount { get; set; }
         public List<OrderItem> Items { get;  set; }      
         public Address ShippingAddress { get;  set; }    
         public PaymentMethodBase PaymentMethod { get;  set; }

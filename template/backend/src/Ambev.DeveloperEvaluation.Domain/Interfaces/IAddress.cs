@@ -5,7 +5,7 @@ namespace Ambev.DeveloperEvaluation.Domain.Interfaces
     public interface IAddress
     {
         public Guid Id { get; set; }
-        public string CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
         public int Number { get; set; }
         public string Street { get; set; }
         public string Neighborhood { get; set; }
