@@ -14,6 +14,10 @@ namespace Ambev.DeveloperEvaluation.Messaging.Consumers
         {
             Console.WriteLine("_________Payment Executed");
         }
+        public void HandleAsync(OrderCreatedEvent evento, CancellationToken cancellationToken = default)
+        {
+            Console.WriteLine("_________OrderCreated");
+        }
         public Task<TResponse> HandleAsync<TRequest, TResponse>(TRequest evento, CancellationToken cancellationToken = default)
             where TRequest : class
             where TResponse : class
