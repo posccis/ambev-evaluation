@@ -12,14 +12,22 @@ namespace Ambev.DeveloperEvaluation.Application.Carts.AddItemToCart
     {
         public AddItemToCartValidator()
         {
-            RuleFor(cart => cart.CustomerId)
+            RuleFor(cart => cart.CartId)
                 .Empty()
                 .Null()
-                .WithMessage("The customer's id is required.");
-            RuleFor(cart => cart.CustomerId)
+                .WithMessage("The cart's id is required.");
+
+            RuleFor(cart => cart.ProductId)
                 .Empty()
                 .Null()
-                .WithMessage("The customer's id is required.");
+                .WithMessage("The product's id is required.");
+
+            RuleFor(cart => cart.Quantity)
+                .GreaterThanOrEqualTo(0)
+                .Empty()
+                .Null()
+                .WithMessage("The product's quantity is required.");
         }
+    
     }
 }

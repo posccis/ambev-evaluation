@@ -1,9 +1,11 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Carts.CreateCart;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
+using Ambev.DeveloperEvaluation.ORM.Common;
 using AutoMapper;
 using FluentValidation;
 using MediatR;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using OneOf.Types;
 
 namespace Ambev.DeveloperEvaluation.Application.Carts.AddItemToCart
@@ -12,13 +14,15 @@ namespace Ambev.DeveloperEvaluation.Application.Carts.AddItemToCart
     {
         private readonly ICartItemRepository _cartItemRepository;
         private readonly IProductRepository _productRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public AddItemToCartHandler(ICartItemRepository cartItemRepository, IProductRepository productRepository, IMapper mapper)
+        public AddItemToCartHandler(ICartItemRepository cartItemRepository, IProductRepository productRepository, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _cartItemRepository = cartItemRepository;
             _productRepository = productRepository;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<AddItemToCartResult> Handle(AddItemToCartCommand command, CancellationToken cancellationToken) 
@@ -36,9 +40,10 @@ namespace Ambev.DeveloperEvaluation.Application.Carts.AddItemToCart
 
             var newCartItem = new CartItem().GenerateCartItem(productToAdd, command.Quantity, command.CartId);
             
-            var result = await _cartItemRepository.CreateCartItemAsync(newCartItem, cancellationToken); 
+            await _cartItemRepository.CreateCartItemAsync(newCartItem, cancellationToken);
+            await _unitOfWork.CommitAsync();
 
-            return _mapper.Map<AddItemToCartResult>(result);
+            return _mapper.Map<AddItemToCartResult>(newCartItem);
 
         }
     }
