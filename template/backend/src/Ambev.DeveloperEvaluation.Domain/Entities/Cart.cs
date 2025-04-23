@@ -1,4 +1,7 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Interfaces;
+﻿using Ambev.DeveloperEvaluation.Common.Validation;
+using Ambev.DeveloperEvaluation.Domain.Common;
+using Ambev.DeveloperEvaluation.Domain.Interfaces;
+using Ambev.DeveloperEvaluation.Domain.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Ambev.DeveloperEvaluation.Domain.Entities
 {
-    public class Cart : ICart
+    public class Cart : BaseEntity, ICart
     {
         public Guid Id { get;  set; }                     
         public Guid CustomerId { get;  set; }
@@ -27,6 +30,17 @@ namespace Ambev.DeveloperEvaluation.Domain.Entities
             IsActive = true;
 
             return this;
+        }
+
+        public ValidationResultDetail Validate()
+        {
+            var validator = new CartValidator();
+            var result = validator.Validate(this);
+            return new ValidationResultDetail
+            {
+                IsValid = result.IsValid,
+                Errors = result.Errors.Select(o => (ValidationErrorDetail)o)
+            };
         }
     }
 }

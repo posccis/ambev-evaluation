@@ -8,6 +8,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Ambev.DeveloperEvaluation.Messaging\Ambev.DeveloperEvaluation.Messaging.csproj" />
     <ProjectReference Include="..\Ambev.DeveloperEvaluation.Domain\Ambev.DeveloperEvaluation.Domain.csproj" />
+    <ProjectReference Include="..\Ambev.DeveloperEvaluation.ORM\Ambev.DeveloperEvaluation.ORM.csproj" />
   </ItemGroup>
 
   <ItemGroup>

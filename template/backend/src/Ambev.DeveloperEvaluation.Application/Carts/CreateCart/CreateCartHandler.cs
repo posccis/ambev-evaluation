@@ -1,5 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
+using Ambev.DeveloperEvaluation.ORM.Common;
 using AutoMapper;
 using FluentValidation;
 using MediatR;
@@ -10,12 +11,14 @@ namespace Ambev.DeveloperEvaluation.Application.Carts.CreateCart
     public class CreateCartHandler : IRequestHandler<CreateCartCommand, CreateCartResult>
     {
         private readonly ICartRepository _cartRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CreateCartHandler(ICartRepository cartRepository, IMapper mapper)
+        public CreateCartHandler(ICartRepository cartRepository, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _cartRepository = cartRepository;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<CreateCartResult> Handle(CreateCartCommand command, CancellationToken cancellationToken) 
@@ -36,6 +39,8 @@ namespace Ambev.DeveloperEvaluation.Application.Carts.CreateCart
             var newCart = await _cartRepository.CreateAsync(newGeneratedCart);
 
             var result = _mapper.Map<CreateCartResult>(newCart);
+
+            await _unitOfWork.CommitAsync();
 
             return result;
 
