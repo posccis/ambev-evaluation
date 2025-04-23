@@ -14,6 +14,6 @@ public interface ICartItemRepository
     /// <param name="id">The unique identifier of the product</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The user if found, null otherwise</returns>
-    Task<CartItem?> CreateCartItemAsync(CartItem item, CancellationToken cancellationToken = default);
+    Task CreateCartItemAsync(CartItem item, CancellationToken cancellationToken = default);
 
 }

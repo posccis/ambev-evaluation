@@ -26,9 +26,9 @@ public class CartItemRepository : ICartItemRepository
     /// <param name="id">The unique identifier of the user</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The user if found, null otherwise</returns>
-    public async Task<CartItem?> CreateCartItemAsync(CartItem item, CancellationToken cancellationToken = default)
+    public async Task CreateCartItemAsync(CartItem item, CancellationToken cancellationToken = default)
     {
-        return await _context.Products.FirstOrDefaultAsync(o=> o.Id == id, cancellationToken);
+        await _context.CartItems.AddAsync(item);
     }
 
 }
