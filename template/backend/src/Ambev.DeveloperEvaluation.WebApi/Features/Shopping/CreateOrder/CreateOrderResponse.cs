@@ -1,24 +1,18 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Ambev.DeveloperEvaluation.Shopping.CreateOrder.AddItemToCart
+namespace Ambev.DeveloperEvaluation.WebApi.Features.Shopping.CreateOrder
 {
-    public class CreateOrderResult
+    public class CreateOrderResponse
     {
         public Guid OrderId { get; set; }
         public DateTime CreatedOn { get; set; }
         public decimal Total { get; set; }
 
-        public CreateOrderResult(Guid orderId, DateTime createdOn, decimal total)
+        public CreateOrderResponse(Guid orderId, DateTime createdOn, decimal total)
         {
             OrderId = orderId;
             CreatedOn = createdOn;
             Total = total;
         }
     }
-
 }
