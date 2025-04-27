@@ -8,10 +8,12 @@ using Ambev.DeveloperEvaluation.IoC;
 using Ambev.DeveloperEvaluation.Messaging.Consumers;
 using Ambev.DeveloperEvaluation.Messaging.Interfaces;
 using Ambev.DeveloperEvaluation.Messaging.Publishers;
+using Ambev.DeveloperEvaluation.NoSql.Context;
 using Ambev.DeveloperEvaluation.ORM;
 using Ambev.DeveloperEvaluation.ORM.Common;
 using Ambev.DeveloperEvaluation.ORM.Repositories;
 using Ambev.DeveloperEvaluation.WebApi.Middleware;
+using MassTransit;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -42,6 +44,13 @@ public class Program
                 )
             );
 
+            builder.Services.AddDbContext<NoSqlContext>(options =>
+                options.UseMongoDB(
+                    builder.Configuration.GetConnectionString("NoSqlConnection"),
+                    "AmbevDb"
+                    )
+            );
+
             builder.Services.AddJwtAuthentication(builder.Configuration);
 
             builder.RegisterDependencies();
@@ -64,7 +73,29 @@ public class Program
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IPublisherBus, Publisher>();
-            builder.Services.AddScoped<IConsumer, Consumer>();
+            builder.Services.AddScoped<IConsumerBus, Consumer>();
+
+            builder.Services.AddMassTransit(x =>
+            {
+                x.SetKebabCaseEndpointNameFormatter();
+
+                x.AddConsumers(typeof(Program).Assembly);
+
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host("localhost", "/", h =>
+                    {
+                        h.Username("guest");
+                        h.Password("guest");
+                    });
+
+                    cfg.ConfigureEndpoints(context);
+                });
+            });
+
+            builder.Services.AddMassTransitHostedService();
+
+
             var app = builder.Build();
             app.UseMiddleware<ValidationExceptionMiddleware>();
 

@@ -67,7 +67,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Cart
         /// <param name="request">The object containg the card id and the object id.</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>The created cart details</returns>
-        [HttpPost]
+        [HttpPost("add-item")]
         [ProducesResponseType(typeof(ApiResponseWithData<CreateUserResponse>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddItemToCart([FromBody] AddItemToCartRequest request, CancellationToken cancellationToken)
