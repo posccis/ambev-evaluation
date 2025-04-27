@@ -30,5 +30,14 @@ public class OrderRepository : IOrderRepository
     {
         _context.Orders.Add(order);
     }
+    /// <summary>
+    /// Get every Order in the database.
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>A list of Orders </returns>
+    public async Task<List<Order>> GetOrdersAsync(CancellationToken cancellationToken = default)
+    {
+        return await _context.Orders.ToListAsync();
+    }
 
 }

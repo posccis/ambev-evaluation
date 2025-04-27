@@ -15,5 +15,6 @@ public interface IOrderRepository
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The user if found, null otherwise</returns>
     void CreateOrderAsync(Order order, CancellationToken cancellationToken = default);
+    Task<List<Order>> GetOrdersAsync(CancellationToken cancellationToken = default);
 
 }
