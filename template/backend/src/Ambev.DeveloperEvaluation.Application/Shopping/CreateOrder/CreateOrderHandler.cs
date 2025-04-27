@@ -53,11 +53,10 @@ namespace Ambev.DeveloperEvaluation.Application.Shopping.CreateOrder
 
             var orderItems = _mapper.Map<List<OrderItem>>(cartOrder.Items);
             order.AddOrderItems(orderItems);
-
-            var paymentEvent = new ExecutePaymentEvent(command.PaymentMethod);
-            await _publisher.SendAsync<ExecutePaymentEvent, string>(paymentEvent);
-
             _orderRepository.CreateOrderAsync(order);
+
+            var paymentEvent = new ExecutePaymentEvent(command.PaymentMethod, order.Id);
+            await _publisher.SendAsync<ExecutePaymentEvent, string>(paymentEvent);
 
             await _unitOfWork.CommitAsync();
 
