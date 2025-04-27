@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ambev.DeveloperEvaluation.Messaging.Interfaces
 {
-    public interface IConsumer
+    public interface IConsumerBus
     {
         Task<TResponse> HandleAsync<TRequest, TResponse>(TRequest evento, CancellationToken cancellationToken = default)
             where TRequest : class
